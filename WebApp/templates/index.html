@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.png') }}">
+    <title>Poisonous or not</title>
+    <script lang="javascript">
+        function addSliderOutput() {
+            const probability = document.querySelector('#probability-slider');
+            const output = document.querySelector('.probability-output');
+
+            output.textContent =probability.value.toString().concat('%');
+
+            probability.addEventListener('input', function() {
+                output.textContent = probability.value.toString().concat('%');
+            });
+        }
+
+        window.onload = addSliderOutput;
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Poisonous Plant Checker</h1>
+        <h2>Identify harmful plants with our smart AI algorithm</h2>
+    </div>
+    <div id="file-container">
+        <form action="/recognize" method="POST" enctype="multipart/form-data">
+            <div>
+                <input type="file" name="image" id="file-input">
+                <span>Maximum file size: 4 MB</span>
+                <span>Format: jpg, png, bmp, or gif</span>
+                <br>
+                <span><b>Note:</b> Some plants can be harmful</span>
+                <span>but still be edible and vice versa. </span>
+                <span>Please proceed with Caution!!</span>
+            </div>
+            <div id="slider-wrapper">
+                <label for="price">Choose probability threshold: </label>
+                <input type="range" name="probability-slider" id="probability-slider" min="0" max="100" step="1" value="50">
+                <output class="probability-output" for="probability-slider"></output>
+            </div>
+            <input type="submit" value="Submit" id="submit-input">
+        </form>
+    </div>
+    <div id="footer">
+        
+    </div>
+</body>
+</html>

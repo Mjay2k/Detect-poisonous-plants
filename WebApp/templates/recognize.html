@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon/favicon.png') }}">
+    <title>Poisonous or not</title>
+</head>
+<body>
+    <div>
+        <h1>Poisonous Plant Checker</h1>
+        <h2>Identify harmful Plants for Humans/Dogs/Cats</h2>
+    </div>
+    <div id="results-container">
+        <h2>Our Algorithm found:</h2>
+        <div id="results-col-wrapper">
+            <img class="results-col" src={{image}}></img>
+            <div class="results-col">
+                <div id="objects-list">
+                    {% for object in predictions %}
+                        {% if object['probability'] * 100 >= probability_threshold %}
+                            <div class='{{"dangerous" if object["tagName"] in dangerous_objects}}'>
+                                <b>{{object['tagName']}}</b>
+                                <span>probability: {{'%0.2f' | format(object['probability'] * 100)}}%</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
